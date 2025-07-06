@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
             totalSize += parseInt(sizeStr, 10);
           }
         } catch (e) {
-         console.log("Error:",e)
+          console.log("Error:", e);
         }
       })
     );
