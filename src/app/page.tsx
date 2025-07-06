@@ -2,9 +2,19 @@
 
 import { useState } from "react";
 
+interface AnalysisResult {
+  loadTimeMs: number;
+  totalSizeKB: string;
+  numRequests: number;
+}
+
+interface ApiErrorResponse {
+  error: string;
+}
+
 export default function HomePage() {
   const [url, setUrl] = useState("");
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<AnalysisResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,14 +30,21 @@ export default function HomePage() {
         body: JSON.stringify({ url }),
       });
 
-      const data = await res.json();
+      const data: AnalysisResult | ApiErrorResponse = await res.json();
+
       if (!res.ok) {
-        throw new Error(data.error || "Something went wrong");
+        const apiError = data as ApiErrorResponse;
+        throw new Error(apiError.error || "Something went wrong");
       }
 
-      setResult(data);
-    } catch (e: any) {
-      setError(e.message);
+      const analysis = data as AnalysisResult;
+      setResult(analysis);
+    } catch (e) {
+      if (e instanceof Error) {
+        setError(e.message);
+      } else {
+        setError("Unknown error occurred");
+      }
     } finally {
       setLoading(false);
     }
