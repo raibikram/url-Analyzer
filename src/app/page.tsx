@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { AiOutlineCloudServer } from "react-icons/ai";
+import { CiFileOn, CiTimer } from "react-icons/ci";
 
 interface AnalysisResult {
   loadTimeMs: number;
@@ -73,9 +75,9 @@ export default function HomePage() {
 
       {result && (
         <div className="mt-6 border-t pt-4">
-          <p>✅ <strong>Load Time:</strong> {result.loadTimeMs} ms</p>
-          <p>✅ <strong>Page Size:</strong> {result.totalSizeKB} KB</p>
-          <p>✅ <strong>Number of Requests:</strong> {result.numRequests}</p>
+          <p ><strong>Load Time:</strong> {result.loadTimeMs} ms</p>
+          <p><strong>Page Size:</strong> {result.totalSizeKB} KB</p>
+          <p><strong>Number of Requests:</strong> {result.numRequests}</p>
         </div>
       )}
     </main>
