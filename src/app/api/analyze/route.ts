@@ -17,6 +17,7 @@ export async function POST(req: NextRequest) {
 
     // Download the page HTML
     const htmlRes = await got(url);
+    // console.log("Html:", htmlRes)
     const html = htmlRes.body;
 
     const $ = cheerio.load(html);
